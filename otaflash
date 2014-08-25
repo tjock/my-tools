@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TOOL_PATH=`dirname $0`
+su_push=$TOOL_PATH/su-push
+
+if [ -x $su_push ];then
+   adb wait-for-device
+   adb push $1 /sdcard/.ota-flash.zip
+   echo "--update_package=/sdcard/.ota-flash.zip" > /tmp/.reccmd
+   $su_push /tmp/.reccmd /cache/recovery/command
+   adb reboot recovery
+fi

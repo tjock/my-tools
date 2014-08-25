@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TOOL_PATH=`dirname $0`
+su_push=$TOOL_PATH/su-push
+
+if [ -x $su_push ];then
+   echo "--wipe_data" > /tmp/.reccmd
+   adb wait-for-device
+   $su_push /tmp/.reccmd /cache/recovery/command
+   adb reboot recovery
+fi
